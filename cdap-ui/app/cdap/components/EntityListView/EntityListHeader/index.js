@@ -89,7 +89,6 @@ export default class EntityListHeader extends Component {
     });
   }
   render() {
-
     let tooltipId = 'filter-tooltip-target-id';
     const placeholder = this.props.isSearchDisabled ?
       T.translate('features.EntityListView.Header.search-disabled-placeholder')
@@ -139,9 +138,12 @@ export default class EntityListHeader extends Component {
         isOpen={this.state.isFilterExpanded}
         toggle={this.handleFilterToggle.bind(this)}
       >
-        <DropdownToggle tag='div'>
+        <DropdownToggle
+          tag='div'
+          className="filter-toggle"
+        >
           <span>{T.translate('features.EntityListView.Header.filters')}</span>
-          <span className="fa fa-filter float-xs-right"></span>
+          <span className="fa fa-caret-down float-xs-right"></span>
         </DropdownToggle>
         <DropdownMenu onClick={e => e.stopPropagation()}>
           {
@@ -173,47 +175,65 @@ export default class EntityListHeader extends Component {
     );
 
     return (
-      <div className="entity-list-header">
-        <div className="search-box">
-          <div className="form-group input-group">
-            <label className="control-label sr-only">
-              {T.translate('features.EntityListView.Header.search-placeholder')}
-            </label>
+      <div>
+        <div className="entity-list-header">
+          <div className="search-box">
+            <div className="form-group input-group">
+              <label className="control-label sr-only">
+                {T.translate('features.EntityListView.Header.search-placeholder')}
+              </label>
+              <input
+                disabled={this.props.isSearchDisabled ? 'disabled': null}
+                type="text"
+                className="form-control"
+                placeholder={placeholder}
+                value={this.state.searchText}
+                onChange={this.onSearchChange.bind(this)}
+              />
+              <span className="input-feedback">
+                <span className="fa fa-search"></span>
+              </span>
+            </div>
+          </div>
+          <div className="filter">
+            <Tooltip
+              placement="top"
+              isOpen={this.state.sortDropdownTooltip}
+              target={tooltipId}
+              toggle={this.toggleSortDropdownTooltip.bind(this)}
+              delay={0}
+            >
+              {T.translate(`features.EntityListView.Header.sortdropdown-tooltip`)}
+            </Tooltip>
+          </div>
+          <div className="view-selector float-xs-right">
+            <div className="sort">
+              {sortDropdown}
+            </div>
+            <div className="pagination-dropdown">
+              <PaginationDropdown
+                numberOfPages={this.state.numberOfPages}
+                currentPage={this.state.currentPage}
+                onPageChange={this.props.onPageChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="entity-list-header">
+          <div className="search-box-2 input-group">
+            <span className="input-feedback-2 input-group-addon">
+              <span className="fa fa-search"></span>
+            </span>
             <input
-              disabled={this.props.isSearchDisabled ? 'disabled': null}
               type="text"
-              className="form-control"
+              className="search-input form-control"
               placeholder={placeholder}
               value={this.state.searchText}
               onChange={this.onSearchChange.bind(this)}
             />
-            <span className="input-feedback">
-              <span className="fa fa-search"></span>
-            </span>
           </div>
-        </div>
-        <div className="filter">
-          {filterDropdown}
-          <Tooltip
-            placement="top"
-            isOpen={this.state.sortDropdownTooltip}
-            target={tooltipId}
-            toggle={this.toggleSortDropdownTooltip.bind(this)}
-            delay={0}
-          >
-            {T.translate(`features.EntityListView.Header.sortdropdown-tooltip`)}
-          </Tooltip>
-        </div>
-        <div className="view-selector float-xs-right">
-          <div className="sort">
-            {sortDropdown}
-          </div>
-          <div className="pagination-dropdown">
-            <PaginationDropdown
-              numberOfPages={this.state.numberOfPages}
-              currentPage={this.state.currentPage}
-              onPageChange={this.props.onPageChange}
-            />
+          <div className="filter-2">
+            {filterDropdown}
           </div>
         </div>
       </div>
