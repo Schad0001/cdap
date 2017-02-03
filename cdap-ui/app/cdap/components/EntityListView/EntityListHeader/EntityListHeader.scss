@@ -130,6 +130,10 @@ $filter-box-width: 150px;
       background-clip: border-box;
       border-left: 0;
       padding-left: 0;
+
+      &:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+      }
     }
   }
 
@@ -163,21 +167,17 @@ $filter-box-width: 150px;
     }
   }
 
-  .filter-2 {
-    width: 150px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    margin-left: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
+  .filter-2,
+  .sort-2 {
+    font-size: 14px;
 
     .dropdown {
       width: 100%;
       cursor: pointer;
 
-      .filter-toggle {
+      .filter-toggle,
+      .sort-toggle {
+        width: 100%;
         display: flex;
         align-items: center;
 
@@ -224,6 +224,47 @@ $filter-box-width: 150px;
       }
     }
   }
+
+  .filter-2 {
+    width: 150px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    margin-left: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+  }
+
+  .sort-2 {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+
+    .sort-label {
+      float: left;
+    }
+
+    .dropdown {
+      width: 150px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      margin-left: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 0.25rem;
+
+      .dropdown-item {
+        padding-right: 0;
+
+        .fa-check {
+          padding-right: 0.5rem;
+        }
+      }
+    }
+  }
+
   .sort {
     border-left: 1px solid $entity-list-header-border-color;
     width: 200px;

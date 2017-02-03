@@ -106,8 +106,8 @@ features:
       gotoLabel: Go to CDAP
       disclaimerMessage: For full feature parity, switch to original UI by clicking "VIEW ORIGINAL UI" in top navigation bar.
     Header:
-      filters: Filters
-      search-placeholder: Search entities...
+      filterBy: Filter by
+      search-placeholder: Search
       sortdropdown-tooltip: Clear Search to enable Sort
       search-disabled-placeholder: Sort by Relevance to Search
       sort: Sort
