@@ -18,10 +18,7 @@ import React, {Component, PropTypes} from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import T from 'i18n-react';
 import debounce from 'lodash/debounce';
-// import classnames from 'classnames';
 import ReactPaginate from 'react-paginate';
-// import PaginationDropdown from 'components/Pagination/PaginationDropdown';
-// import {Tooltip} from 'reactstrap';
 
 require('./EntityListHeader.scss');
 
@@ -97,50 +94,81 @@ export default class EntityListHeader extends Component {
       isFilterExpanded: false
     });
   }
+  showPagination() {
+    return (
+      <div className="pagination">
+        {
+          this.state.numberOfPages <= 1 ?
+            <span className="total-entities">
+              {this.state.numberOfEntities} Entities
+            </span>
+          :
+            <span>
+              <span className="total-entities">
+                {this.state.numberOfEntities}+ Entities
+              </span>
+              <ReactPaginate
+                pageCount={this.state.numberOfPages}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                breakLabel={<span>...</span>}
+                breakClassName={"ellipsis"}
+                previousLabel={<span className="fa fa-angle-left"></span>}
+                nextLabel={<span className="fa fa-angle-right"></span>}
+                onPageChange={this.handlePageChange.bind(this)}
+                initialPage={this.state.currentPage-1}
+                containerClassName={"page-list"}
+                activeClassName={"current-page"}
+              />
+            </span>
+        }
+      </div>
+    );
+  }
   render() {
     let tooltipId = 'filter-tooltip-target-id';
     const placeholder = T.translate('features.EntityListView.Header.search-placeholder');
 
     const sortDropdown = (
-        <Dropdown
-          disabled={this.props.isSortDisabled}
-          isOpen={this.state.isSortExpanded}
-          toggle={this.handleSortToggle.bind(this)}
-          id={tooltipId}
+      <Dropdown
+        disabled={this.props.isSortDisabled}
+        isOpen={this.state.isSortExpanded}
+        toggle={this.handleSortToggle.bind(this)}
+        id={tooltipId}
+      >
+        <DropdownToggle
+          tag='div'
+          className="sort-toggle"
         >
-          <DropdownToggle
-            tag='div'
-            className="sort-toggle"
-          >
-            {
-              this.state.activeSort ?
-                <span>{this.state.activeSort.displayName}</span>
-              :
-                'Relevance'
-            }
-            <span className="fa fa-angle-down float-xs-right"></span>
-          </DropdownToggle>
-          <DropdownMenu>
-            {
-              this.state.sortOptions.map((option, index) => {
-                return (
-                  <DropdownItem
-                    key={index}
-                    onClick={this.props.onSortClick.bind(this, option)}
-                  >
-                    {option.displayName}
-                    {
-                      this.state.activeSort.fullSort === option.fullSort ?
-                        <span className="fa fa-check float-xs-right"></span>
-                      :
-                        null
-                    }
-                  </DropdownItem>
-                );
-              })
-            }
-          </DropdownMenu>
-        </Dropdown>
+          {
+            this.state.activeSort ?
+              <span>{this.state.activeSort.displayName}</span>
+            :
+              'Relevance'
+          }
+          <span className="fa fa-angle-down float-xs-right"></span>
+        </DropdownToggle>
+        <DropdownMenu>
+          {
+            this.state.sortOptions.map((option, index) => {
+              return (
+                <DropdownItem
+                  key={index}
+                  onClick={this.props.onSortClick.bind(this, option)}
+                >
+                  {option.displayName}
+                  {
+                    this.state.activeSort.fullSort === option.fullSort ?
+                      <span className="fa fa-check float-xs-right"></span>
+                    :
+                      null
+                  }
+                </DropdownItem>
+              );
+            })
+          }
+        </DropdownMenu>
+      </Dropdown>
     );
 
     const filterDropdown = (
@@ -184,60 +212,11 @@ export default class EntityListHeader extends Component {
       </Dropdown>
     );
 
-    let pageList = [];
-    for (let pageIndex = 1; pageIndex < this.state.numberOfPages+1; pageIndex++) {
-      pageList.push(pageIndex);
-    }
-
     return (
       <div>
-        {/*
-          <div className="entity-list-header">
-            <div className="search-box">
-              <div className="form-group input-group">
-                <label className="control-label sr-only">
-                  {T.translate('features.EntityListView.Header.search-placeholder')}
-                </label>
-                <input
-                  disabled={this.props.isSearchDisabled ? 'disabled': null}
-                  type="text"
-                  className="form-control"
-                  placeholder={placeholder}
-                  value={this.state.searchText}
-                  onChange={this.onSearchChange.bind(this)}
-                />
-                <span className="input-feedback">
-                  <span className="fa fa-search"></span>
-                </span>
-              </div>
-            </div>
-            <div className="filter">
-              <Tooltip
-                placement="top"
-                isOpen={this.state.sortDropdownTooltip}
-                target={tooltipId}
-                toggle={this.toggleSortDropdownTooltip.bind(this)}
-                delay={0}
-              >
-                {T.translate(`features.EntityListView.Header.sortdropdown-tooltip`)}
-              </Tooltip>
-            </div>
-            <div className="view-selector float-xs-right">
-              <div className="sort">
-              </div>
-              <div className="pagination-dropdown">
-                <PaginationDropdown
-                  numberOfPages={this.state.numberOfPages}
-                  currentPage={this.state.currentPage}
-                  onPageChange={this.props.onPageChange}
-                />
-              </div>
-            </div>
-          </div>
-        */}
         <div className="entity-list-header">
-          <div className="search-box-2 input-group">
-            <span className="input-feedback-2 input-group-addon">
+          <div className="search-box input-group">
+            <span className="input-feedback input-group-addon">
               <span className="fa fa-search"></span>
             </span>
             <input
@@ -248,10 +227,10 @@ export default class EntityListHeader extends Component {
               onChange={this.onSearchChange.bind(this)}
             />
           </div>
-          <div className="filter-2">
+          <div className="filter">
             {filterDropdown}
           </div>
-          <div className="sort-2">
+          <div className="sort">
             <span className="sort-label">
               {T.translate('features.EntityListView.Header.sortLabel')}
             </span>
@@ -259,26 +238,7 @@ export default class EntityListHeader extends Component {
           </div>
           {
             this.state.numberOfEntities ?
-              <div className="pagination-2">
-                <span className="total-entities">
-                  {this.state.numberOfEntities}+ Entities
-                </span>
-                <ReactPaginate
-                  pageCount={this.state.numberOfPages}
-                  pageRangeDisplayed={3}
-                  marginPagesDisplayed={1}
-                  breakLabel={<a>...</a>}
-                  breakClassName={"ellipsis"}
-                  previousLabel={<span className="fa fa-angle-left"></span>}
-                  nextLabel={<span className="fa fa-angle-right"></span>}
-                  onPageChange={this.handlePageChange.bind(this)}
-                  initialPage={this.state.currentPage-1}
-                  containerClassName={"page-list"}
-                  activeClassName={"current-page"}
-                  pageClassName={"page-index"}
-                  pageLinkClassName={"page-index-link"}
-                />
-              </div>
+              this.showPagination()
             :
               null
           }
