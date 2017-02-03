@@ -18,8 +18,10 @@ import React, {Component, PropTypes} from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import T from 'i18n-react';
 import debounce from 'lodash/debounce';
-import PaginationDropdown from 'components/Pagination/PaginationDropdown';
-import {Tooltip} from 'reactstrap';
+// import classnames from 'classnames';
+import ReactPaginate from 'react-paginate';
+// import PaginationDropdown from 'components/Pagination/PaginationDropdown';
+// import {Tooltip} from 'reactstrap';
 
 require('./EntityListHeader.scss');
 
@@ -33,6 +35,7 @@ export default class EntityListHeader extends Component {
       sortOptions: props.sortOptions,
       filterOptions: props.filterOptions,
       numberOfPages: props.numberOfPages,
+      numberOfEntities: props.numberOfEntities,
       currentPage: props.currentPage,
       activeFilter: props.activeFilter,
       activeSort: props.activeSort
@@ -47,6 +50,7 @@ export default class EntityListHeader extends Component {
       sortOptions: nextProps.sortOptions,
       filterOptions: nextProps.filterOptions,
       numberOfPages: nextProps.numberOfPages,
+      numberOfEntities: nextProps.numberOfEntities,
       currentPage: nextProps.currentPage,
       activeFilter: nextProps.activeFilter,
       activeSort: nextProps.activeSort
@@ -62,6 +66,11 @@ export default class EntityListHeader extends Component {
       return;
     }
     this.setState({isSortExpanded: !this.state.isSortExpanded});
+  }
+
+  handlePageChange(data) {
+    let clickedIndex = data.selected+1;
+    this.props.onPageChange(clickedIndex);
   }
 
   onSearchChange(e) {
@@ -109,7 +118,7 @@ export default class EntityListHeader extends Component {
               :
                 'Relevance'
             }
-            <span className="fa fa-caret-down float-xs-right"></span>
+            <span className="fa fa-angle-down float-xs-right"></span>
           </DropdownToggle>
           <DropdownMenu>
             {
@@ -144,7 +153,7 @@ export default class EntityListHeader extends Component {
           className="filter-toggle"
         >
           <span>{T.translate('features.EntityListView.Header.filterBy')}</span>
-          <span className="fa fa-caret-down float-xs-right"></span>
+          <span className="fa fa-angle-down float-xs-right"></span>
         </DropdownToggle>
         <DropdownMenu onClick={e => e.stopPropagation()}>
           {
@@ -174,6 +183,11 @@ export default class EntityListHeader extends Component {
         </DropdownMenu>
       </Dropdown>
     );
+
+    let pageList = [];
+    for (let pageIndex = 1; pageIndex < this.state.numberOfPages+1; pageIndex++) {
+      pageList.push(pageIndex);
+    }
 
     return (
       <div>
@@ -243,6 +257,26 @@ export default class EntityListHeader extends Component {
             </span>
             {sortDropdown}
           </div>
+          <div className="pagination-2">
+            <span className="total-entities">
+              {this.state.numberOfEntities}+ Entities
+            </span>
+            <ReactPaginate
+              pageCount={this.state.numberOfPages}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
+              breakLabel={<a>...</a>}
+              breakClassName={"ellipsis"}
+              previousLabel={<span className="fa fa-angle-left"></span>}
+              nextLabel={<span className="fa fa-angle-right"></span>}
+              onPageChange={this.handlePageChange.bind(this)}
+              initialPage={this.state.currentPage-1}
+              containerClassName={"page-list"}
+              activeClassName={"current-page"}
+              pageClassName={"page-index"}
+              pageLinkClassName={"page-index-link"}
+            />
+          </div>
         </div>
       </div>
     );
@@ -278,6 +312,7 @@ EntityListHeader.propTypes = {
   isSearchDisabled: PropTypes.bool,
   searchText: PropTypes.string,
   numberOfPages: PropTypes.number,
+  numberOfEntities: PropTypes.number,
   currentPage: PropTypes.number,
   onPageChange: PropTypes.func
 };

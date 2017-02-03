@@ -31,10 +31,6 @@ $filter-box-width: 150px;
   display: flex;
   align-items: center;
 
-  .current-page {
-    margin-left: 5px;
-  }
-
   .search-box,
   .sort,
   .filter,
@@ -242,6 +238,8 @@ $filter-box-width: 150px;
     align-items: center;
 
     .sort-label {
+      font-size: 12px;
+      font-weight: bold;
       float: left;
     }
 
@@ -260,6 +258,66 @@ $filter-box-width: 150px;
 
         .fa-check {
           padding-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .pagination-2 {
+    margin-left: auto;
+    margin-right: 130px;
+
+    .total-entities {
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .page-list {
+      padding-left: 16px;
+      list-style-type: none;
+      display: inline;
+
+      li {
+        font-weight: bold;
+        display: inline-block;
+        height: 22px;
+        width: 22px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 100%;
+
+        a {
+          color: inherit;
+          vertical-align: middle;
+          &:hover,
+          &:focus {
+            text-decoration: none;
+          }
+        }
+
+        &:not(:first-child) {
+          margin-left: 15px;
+        }
+
+        &.current-page {
+          background-color: rgba(93, 103, 137, 1);
+
+          .page-index-link {
+            color: #ffffff;
+          }
+        }
+
+        &.ellipsis {
+          margin-left: 5px;
+          margin-right: -19px;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &:not(.current-page),
+          &:not(.ellipsis) {
+            background-color: rgba(219, 219, 219, 1);
+          }
         }
       }
     }

@@ -357,6 +357,7 @@ class EntityListView extends Component {
           isSortDisabled,
           isSearchDisabled,
           entities: res,
+          total: total,
           loading: false,
           entityErr: false,
           errStatusCode: null,
@@ -558,6 +559,7 @@ class EntityListView extends Component {
           onSearch={this.handleSearch.bind(this)}
           isSearchDisabled={this.state.isSearchDisabled}
           searchText={this.state.query}
+          numberOfEntities={this.state.total}
           numberOfPages={this.state.numPages}
           currentPage={this.state.currentPage}
           onPageChange={this.handlePageChange}
