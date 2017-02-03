@@ -257,26 +257,31 @@ export default class EntityListHeader extends Component {
             </span>
             {sortDropdown}
           </div>
-          <div className="pagination-2">
-            <span className="total-entities">
-              {this.state.numberOfEntities}+ Entities
-            </span>
-            <ReactPaginate
-              pageCount={this.state.numberOfPages}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={1}
-              breakLabel={<a>...</a>}
-              breakClassName={"ellipsis"}
-              previousLabel={<span className="fa fa-angle-left"></span>}
-              nextLabel={<span className="fa fa-angle-right"></span>}
-              onPageChange={this.handlePageChange.bind(this)}
-              initialPage={this.state.currentPage-1}
-              containerClassName={"page-list"}
-              activeClassName={"current-page"}
-              pageClassName={"page-index"}
-              pageLinkClassName={"page-index-link"}
-            />
-          </div>
+          {
+            this.state.numberOfEntities ?
+              <div className="pagination-2">
+                <span className="total-entities">
+                  {this.state.numberOfEntities}+ Entities
+                </span>
+                <ReactPaginate
+                  pageCount={this.state.numberOfPages}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={1}
+                  breakLabel={<a>...</a>}
+                  breakClassName={"ellipsis"}
+                  previousLabel={<span className="fa fa-angle-left"></span>}
+                  nextLabel={<span className="fa fa-angle-right"></span>}
+                  onPageChange={this.handlePageChange.bind(this)}
+                  initialPage={this.state.currentPage-1}
+                  containerClassName={"page-list"}
+                  activeClassName={"current-page"}
+                  pageClassName={"page-index"}
+                  pageLinkClassName={"page-index-link"}
+                />
+              </div>
+            :
+              null
+          }
         </div>
       </div>
     );
