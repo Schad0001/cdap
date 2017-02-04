@@ -32,6 +32,8 @@
     &:focus {
       outline: none;
     }
+  }
+  &.dropdown {
     .dropdown-toggle {
       background: transparent;
       border: 0;
@@ -127,6 +129,12 @@
       }
       .dropdown-divider {
         background-color: rgba(75, 75, 75, 1);
+      }
+    }
+    &.open {
+      .dropdown-menu {
+        display: flex;
+        flex-direction: column;
       }
     }
   }

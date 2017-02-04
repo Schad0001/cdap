@@ -102,6 +102,10 @@
       display: inline-flex;
       justify-content: flex-end;
 
+      .cask-market-button {
+        display: block;
+      }
+
       li {
         vertical-align: top;
         &.with-shadow {

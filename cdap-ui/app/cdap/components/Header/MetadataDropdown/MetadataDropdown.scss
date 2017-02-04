@@ -41,6 +41,8 @@
         color: white;
       }
     }
+  }
+  &.dropdown {
     .dropdown-toggle {
       &:focus {
         outline: none;
@@ -96,6 +98,12 @@
       }
       .dropdown-divider {
         background-color: rgba(75, 75, 75, 1);
+      }
+    }
+    &.open {
+      .dropdown-menu {
+        display: flex;
+        flex-direction: column;
       }
     }
   }
