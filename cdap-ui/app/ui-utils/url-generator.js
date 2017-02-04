@@ -138,7 +138,10 @@ window.getTrackerUrl = function(navigationObj = {}) {
     'tracker': '',
     'tracker.detail': '',
     'tracker.detail.entity': '/entity/:entityType/:entityId',
-    'tracker.detail.entity.metadata': '/entity/:entityType/:entityId/metadata'
+    'tracker.detail.entity.metadata': '/entity/:entityType/:entityId/metadata',
+    'tracker.integrations': '/integrations',
+    'tracker.tags': '/tags',
+    'tracker.dictionary': '/dictionary'
   };
   let url = baseUrl + stateToUrlMap[stateName || 'tracker'];
   url = buildCustomUrl(url, stateParams);
