@@ -60,7 +60,9 @@ export default class EntityListInfo extends Component {
       <div className={this.props.className}>
         <h3>{text.title} "{this.props.namespace}"</h3>
         <div className="subtitle">
-          {subtitle}
+          <span>
+            {subtitle}
+          </span>
         </div>
       </div>
     );
