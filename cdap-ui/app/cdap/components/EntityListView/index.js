@@ -29,13 +29,14 @@ import PlusButtonStore from 'services/PlusButtonStore';
 import globalEvents from 'services/global-events';
 import isNil from 'lodash/isNil';
 import Overview from 'components/Overview';
-import WelcomeScreen from 'components/EntityListView/WelcomeScreen';
-import HomeListView from 'components/EntityListView/ListView';
+import WelcomeScreen from './WelcomeScreen';
+import HomeListView from './ListView';
+import EntityListInfo from './EntityListInfo';
 
 require('./EntityListView.scss');
 import ee from 'event-emitter';
 
-const defaultFilter = ['app', 'dataset', 'stream'];
+const defaultFilter = ['app', 'artifact', 'dataset', 'stream'];
 
 // 312 = cardWith (300) + (5 x 2 side margins) + ( 1 x 2 border widths)
 const cardWidthWithMarginAndBorder = 312;
@@ -571,6 +572,13 @@ class EntityListView extends Component {
           currentPage={this.state.currentPage}
           setDirection={this.setAnimationDirection}
         >
+          <EntityListInfo
+            className="title-subtitle"
+            namespace={this.props.params.namespace}
+            activeFilter={this.state.filter}
+            activeSort={this.state.sortObj}
+            searchText={this.state.query}
+          />
           <div className={classNames("entities-container")}>
             <HomeListView
               className={classNames("home-list-view-container", {"show-overview-main-container": !isNil(this.state.selectedEntity)})}
