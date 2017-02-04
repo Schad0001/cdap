@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 Cask Data, Inc.
+ * Copyright © 2017 Cask Data, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,122 +14,122 @@
  * the License.
  */
 
-@import "../../styles/variables.scss";
+@import '../../styles/variables.scss';
 
-$navbar-brand-bg: #363945;
+.global-navbar {
+  height: 50px;
+  background: $navbar-bg;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1500;
 
-@mixin product-navbar-mixins($border-product-color, $active-link-color) {
-  .brand-header .navbar-brand { border-color: $border-product-color; }
-  .navbar-list {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    a {
-      &:hover,
-      &.active {
-        color: $active-link-color;
-      }
-      color: #cccccc;
-    }
-  }
-}
+  .global-navbar-toggler {
+    display: none;
 
-.cask-header {
-  @media(max-width: 1260px) {
-    .navbar {
-      .navbar-list {
-        padding-left: 10px;
-      }
-    }
-  }
-  .navbar {
-    height: $height-of-header;
-    background-color: $navbar-bg;
-    color: white;
-    border: 0;
-    font-weight: 500;
-    z-index: 1000;
-    margin-bottom: 0;
-    padding: 0;
-
-    &.cdap { @include product-navbar-mixins($cdap-orange, $cdap-orange); }
-    &.hydrator { @include product-navbar-mixins($hydrator-blue, #43AAFF); }
-    &.tracker { @include product-navbar-mixins($tracker-green, $tracker-green); }
-    .brand-header {
-      float: left;
-      a { color: white; }
-
-      .navbar-brand {
-        background-color: transparent;
-        padding: 10px;
-      }
-    }
-
-    .menu-item,
-    .navbar-item {
+    @media(max-width: 1011px) {
       display: inline-block;
-      line-height: $height-of-header;
-      height: $height-of-header;
-      text-decoration: none;
-    }
-
-    .menu-item {
-      font-size: 14px;
-    }
-
-    .product-title {
-      margin-left: 10px;
-      user-select: none;
-    }
-
-    /* RIGHT MENU */
-    .right-menu {
       height: 50px;
+      padding-top: 0;
+      i {
+        line-height: 47px;
+        color: white;
+      }
     }
-    .navbar-item {
-      font-size: 17px;
-      cursor: pointer;
-      float: left;
-      padding: 0 12px;
+  }
 
-      .namespace-holder {
-        height: inherit;
+  .brand-section {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .global-navbar-collapse {
+    @media(max-width: 1011px) {
+      display: none;
+      &.minimized {
+        display: block;
+        background-color: inherit;
+        width: 100%;
       }
-      &.open {
-        background-color: white;
-        color: #666666;
-        border-bottom: 2px solid #cccccc;
-      }
+    }
+    display: inline-flex;
+    justify-content: space-between;
+    width: calc(100% - 108px);
+    line-height: 50px;
 
-      ul.dropdown-menu {
-        margin: 1px 0;
-        border: 0;
-        border-radius: 0 0 4px 4px;
-        max-height: 300px;
-        overflow-y: auto;
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+        color: white;
+        margin: 0 15px;
+        vertical-align: top;
+        &:focus {
+          outline: none;
+        }
 
-        li a {
-          line-height: 30px;
-          font-weight: 500;
+        a {
+          color: inherit;
+          display: block;
+          background: transparent;
+          text-decoration: none;
         }
       }
     }
-    // TODO: Look into switching this to behave like the Settings uib dropdown
-    .popover.bottom > .arrow {
-      border-bottom-color: #999999;
-    }
-  }
 
-  .display-container {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1040;
+    .navbar-list-section,
+    .navbar-right-section {
+      .dropdown {
+        .dropdown-menu {
+          .dropdown-divider {
+            height: 1px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+          }
+        }
+      }
+      .dropdown,
+      .dropdown.open {
+        .dropdown-toggle {
+          background-color: transparent;
+          color: white;
+        }
+      }
+    }
+    .navbar-right-section {
+      vertical-align: top;
+      display: inline-flex;
+      justify-content: flex-end;
+
+      li {
+        vertical-align: top;
+        &.with-shadow {
+          box-shadow: -18px 0px 24px -9px rgba(0, 0, 0, 0.4);
+          height: 50px;
+          padding-left: 10px;
+          margin-left: 10px;
+          margin-right: 0;
+          min-width: 120px;
+          cursor: pointer;
+
+          [class*="icon-"] {
+            margin-right: 5px;
+          }
+        }
+        .namespace-dropdown {
+          border: 0;
+          .dropdown {
+            .current-namespace {
+              background: transparent;
+              &:hover {
+                background: transparent;
+              }
+            }
+          }
+        }
+      }
+    }
+
   }
 }
