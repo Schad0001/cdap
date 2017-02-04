@@ -21,6 +21,7 @@ import CustomDropdownMenu from 'components/CustomDropdownMenu';
 import {Link} from 'react-router';
 import RedirectToLogin from 'services/redirect-to-login';
 import cookie from 'react-cookie';
+import T from 'i18n-react';
 
 require('./ProductDropdown.scss');
 
@@ -67,7 +68,7 @@ export default class ProductDropdown extends Component {
             tag="li"
             onClick={this.logout.bind(this)}
           >
-            <a>Logout</a>
+            <a>{T.translate('features.Navbar.ProductDropdown.logout')}</a>
           </DropdownItem>
         </ul>
       );
@@ -86,18 +87,21 @@ export default class ProductDropdown extends Component {
           <DropdownItem tag="li">
             <a
               target="_blank"
-              href="http://cask.co/company/about/">About CDAP</a>
+              href="http://cask.co/company/about/"
+            >
+              {T.translate('features.Navbar.ProductDropdown.aboutLabel')}
+            </a>
           </DropdownItem>
           <DropdownItem tag="ul" divider />
           <DropdownItem tag="li">
             {
               !this.props.nativeLink ?
                 <Link to={`/management`}>
-                  Management
+                  {T.translate('features.Management.Title')}
                 </Link>
               :
                 <a href={managementURL}>
-                  Management
+                  {T.translate('features.Management.Title')}
                 </a>
             }
           </DropdownItem>
@@ -107,7 +111,7 @@ export default class ProductDropdown extends Component {
               target="_blank"
               href="http://cask.co/products/cdap/"
             >
-              Product Website
+              {T.translate('features.Navbar.ProductDropdown.prodWebsiteLabel')}
             </a>
           </DropdownItem>
           <DropdownItem tag="li">
@@ -115,7 +119,7 @@ export default class ProductDropdown extends Component {
               target="_blank"
               href="http://cask.co/community"
             >
-              Support
+              {T.translate('features.Navbar.ProductDropdown.supportLabel')}
             </a>
           </DropdownItem>
           <DropdownItem tag="li">
@@ -123,7 +127,7 @@ export default class ProductDropdown extends Component {
               href="http://docs.cask.co"
               target="_blank"
             >
-              Documentation
+              {T.translate('features.Navbar.ProductDropdown.documentationLabel')}
             </a>
           </DropdownItem>
           {

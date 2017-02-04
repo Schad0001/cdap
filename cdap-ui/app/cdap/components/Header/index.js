@@ -121,7 +121,7 @@ export default class Header extends Component {
               <li className="with-shadow">
                 <CaskMarketButton>
                   <span className="fa icon-CaskMarket"></span>
-                  <span>Cask Market</span>
+                  <span>{T.translate('commons.market')}</span>
                 </CaskMarketButton>
               </li>
               <li
