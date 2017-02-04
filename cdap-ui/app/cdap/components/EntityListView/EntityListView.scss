@@ -138,6 +138,19 @@
           width: calc((100% - 20px - 10px - (2 * 10px)) / 3);
         }
       }
+
+      @media(min-width: 500px) and (max-width: 767px) {
+        .entity-cards {
+          width: calc((100% - 20px - 10px - 10px) / 2);
+        }
+      }
+
+      @media(max-width: 499px) {
+        .entity-cards {
+          width: calc((100% - 20px - 10px));
+        }
+      }
+
       &.show-overview-main-container {
         flex: 1 1;
 

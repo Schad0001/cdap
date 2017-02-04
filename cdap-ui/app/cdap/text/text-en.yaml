@@ -357,11 +357,16 @@ features:
   MarketEntityModal:
     version: "Version :"
   Navbar:
-    CDAP:
-      dashboard: Dashboard
-      home: Home
-      management: Management
-      olduilink: VIEW ORIGINAL UI
+    overviewLabel: Overview
+    pipelinesLabel: Pipelines
+    metadataLabel: Metadata
+    Metadata:
+      searchLabel: Search
+      integrationsLabel: Integrations
+      tagsLabel: Tags
+      dictionaryLabel: Dictionary
+    RightSection:
+      olduilink: View Original UI
     HeaderActions:
       caskHome: Cask Home
       documentation: Documentation
@@ -374,6 +379,7 @@ features:
       extension: "Extensions:"
     NamespaceDropdown:
       applications: Applications
+      namespaceLabel: Namespace
       datasets: Datasets
       streams: Streams
       addNS: "Add Namespace"
