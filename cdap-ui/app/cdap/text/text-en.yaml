@@ -125,6 +125,10 @@ features:
   Dashboard:
     Title: Dashboard
 
+  DetailView:
+    PropertiesTab:
+      title: "{entityId} Properties"
+
   FileDnD:
     uploadLabel: Drag-and-drop the file to be uploaded
     clickLabel: Click to select file from your computer
@@ -412,7 +416,6 @@ features:
     value: Value
     scope: Scope
     newValuePlaceholder: Enter enw value
-
 
   Resource-Center:
     Stream:

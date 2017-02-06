@@ -28,7 +28,7 @@ export default function PropertiesTab({entity}) {
       </div>
 
       <PropertiesEditor
-        entityType="datasets"
+        entityType="streams"
         entityId={entity.id}
       />
     </div>

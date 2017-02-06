@@ -16,7 +16,10 @@
 
 .properties-editor-container {
   .table {
-    border-bottom: 1px solid #55595c;
+    td,
+    th {
+      border-bottom: 1px solid #55595c;
+    }
 
     .key { width: 20%; }
     .scope { width: 10%; }
