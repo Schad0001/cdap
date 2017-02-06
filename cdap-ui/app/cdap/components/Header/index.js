@@ -77,38 +77,38 @@ export default class Header extends Component {
             height="50px"
           />
         </div>
+        <ul className="navbar-list-section">
+          <li>
+            {
+              !this.props.nativeLink ?
+                <Link to={`/ns/${this.state.currentNamespace}`}>
+                  {T.translate('features.Navbar.overviewLabel')}
+                </Link>
+              :
+                <a href={`${baseCDAPURL}/ns/${this.state.currentNamespace}`}>
+                  {T.translate('features.Navbar.overviewLabel')}
+                </a>
+            }
+          </li>
+          <li>
+            <a href={
+              window.getHydratorUrl({
+                stateName: 'hydrator.list',
+                stateParams: {
+                  namespace: this.state.currentNamespace
+                }
+              })
+            }>
+              {T.translate('features.Navbar.pipelinesLabel')}
+            </a>
+          </li>
+          <li>
+            <MetadataDropdown />
+          </li>
+        </ul>
         <div className={classnames("global-navbar-collapse", {
             'minimized': this.state.toggleNavbar
           })}>
-          <ul className="navbar-list-section">
-            <li>
-              {
-                !this.props.nativeLink ?
-                  <Link to={`/ns/${this.state.currentNamespace}`}>
-                    {T.translate('features.Navbar.overviewLabel')}
-                  </Link>
-                :
-                  <a href={`${baseCDAPURL}/ns/${this.state.currentNamespace}`}>
-                    {T.translate('features.Navbar.overviewLabel')}
-                  </a>
-              }
-            </li>
-            <li>
-              <a href={
-                window.getHydratorUrl({
-                  stateName: 'hydrator.list',
-                  stateParams: {
-                    namespace: this.state.currentNamespace
-                  }
-                })
-              }>
-                {T.translate('features.Navbar.pipelinesLabel')}
-              </a>
-            </li>
-            <li>
-              <MetadataDropdown />
-            </li>
-          </ul>
           <div className="navbar-right-section">
             <ul>
               <li>

@@ -23,14 +23,16 @@
   width: 100%;
   top: 0;
   z-index: 1500;
+  display: flex;
 
   .global-navbar-toggler {
     display: none;
 
     @media(max-width: 1011px) {
-      display: inline-block;
+      display: inline-flex;
       height: 50px;
       padding-top: 0;
+      order: 3;
       i {
         line-height: 47px;
         color: white;
@@ -50,53 +52,11 @@
         display: block;
         background-color: inherit;
         width: 100%;
+        position: absolute;
+        top: 50px;
       }
     }
-    display: inline-flex;
-    justify-content: space-between;
-    width: calc(100% - 108px);
     line-height: 50px;
-
-    ul {
-      margin: 0;
-      padding: 0;
-      li {
-        display: inline-block;
-        color: white;
-        margin: 0 15px;
-        vertical-align: top;
-        &:focus {
-          outline: none;
-        }
-
-        a {
-          color: inherit;
-          display: block;
-          background: transparent;
-          text-decoration: none;
-        }
-      }
-    }
-
-    .navbar-list-section,
-    .navbar-right-section {
-      .dropdown {
-        .dropdown-menu {
-          .dropdown-divider {
-            height: 1px;
-            margin: 0.5rem 0;
-            overflow: hidden;
-          }
-        }
-      }
-      .dropdown,
-      .dropdown.open {
-        .dropdown-toggle {
-          background-color: transparent;
-          color: white;
-        }
-      }
-    }
     .navbar-right-section {
       vertical-align: top;
       display: inline-flex;
@@ -134,6 +94,50 @@
         }
       }
     }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      color: white;
+      margin: 0 15px;
+      vertical-align: top;
+      &:focus {
+        outline: none;
+      }
 
+      a {
+        color: inherit;
+        display: block;
+        background: transparent;
+        text-decoration: none;
+      }
+    }
+  }
+  .navbar-list-section {
+    display: inline-flex;
+    min-width: 300px;
+    align-items: baseline;
+    flex: 1;
+  }
+  .navbar-list-section,
+  .navbar-right-section {
+    .dropdown {
+      .dropdown-menu {
+        .dropdown-divider {
+          height: 1px;
+          margin: 0.5rem 0;
+          overflow: hidden;
+        }
+      }
+    }
+    .dropdown,
+    .dropdown.open {
+      .dropdown-toggle {
+        background-color: transparent;
+        color: white;
+      }
+    }
   }
 }
