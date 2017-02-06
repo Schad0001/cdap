@@ -316,6 +316,12 @@ class EntityListView extends Component {
   ) {
     let offset = (currentPage - 1) * this.pageSize;
 
+    // TODO/FIXME: hack to not display programs when filter is empty (which means all
+    // entities should be displayed). Maybe this should be a backend change?
+    if (filter.length === 0) {
+      filter = filter.concat('app', 'artifact', 'dataset', 'stream');
+    }
+
     this.setState({
       loading : true,
       selectedEntity: null
