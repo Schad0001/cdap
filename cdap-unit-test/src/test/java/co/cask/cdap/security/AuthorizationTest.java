@@ -1338,9 +1338,16 @@ public class AuthorizationTest extends TestBase {
             return false;
           }
         }
-        return true;
+        return !history.isEmpty();
       }
     }, 5, TimeUnit.MINUTES, "Not all program runs have failed status. Expected all run status to be failed");
+
+    Tasks.waitFor(false, new Callable<Boolean>() {
+      @Override
+      public Boolean call() throws Exception {
+        return programManager.isRunning();
+      }
+    }, 60, TimeUnit.SECONDS);
   }
 
 
