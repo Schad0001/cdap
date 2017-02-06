@@ -60,10 +60,6 @@ class EntityListView extends Component {
         id: 'dataset'
       },
       {
-        displayName: T.translate('commons.entity.program.plural'),
-        id: 'program'
-      },
-      {
         displayName: T.translate('commons.entity.stream.plural'),
         id: 'stream'
       }
@@ -577,6 +573,7 @@ class EntityListView extends Component {
             currentPage={this.state.currentPage}
             onPageChange={this.handlePageChange}
             activeFilter={this.state.filter}
+            filterOptions={this.filterOptions}
             activeSort={this.state.sortObj}
             searchText={this.state.query}
           />

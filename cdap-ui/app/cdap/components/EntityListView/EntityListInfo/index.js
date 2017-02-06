@@ -62,7 +62,7 @@ export default class EntityListInfo extends Component {
   }
   render() {
     let activeFilters = this.props.activeFilter.map(filter => upperFirst(filter) + 's');
-    let allFiltersSelected = (activeFilters.length === 0 || activeFilters.length === 5);
+    let allFiltersSelected = (activeFilters.length === 0 || activeFilters.length === this.props.filterOptions.length);
     let activeFilterString = activeFilters.join(', ');
     let activeSort = this.props.activeSort;
     let searchText = this.props.searchText;
@@ -117,6 +117,7 @@ EntityListInfo.propTypes = {
   className: PropTypes.string,
   namespace: PropTypes.string,
   activeFilter: PropTypes.array,
+  filterOptions: PropTypes.array,
   activeSort: PropTypes.obj,
   searchText: PropTypes.string,
   numberOfPages: PropTypes.number,
@@ -129,6 +130,7 @@ EntityListInfo.defaultProps = {
   className: '',
   namespace: '',
   activeFilter: [],
+  filterOptions: [],
   activeSort: {},
   searchText: '',
   numberOfPages: 1,
