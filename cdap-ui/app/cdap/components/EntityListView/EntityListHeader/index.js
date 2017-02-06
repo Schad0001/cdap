@@ -18,7 +18,6 @@ import React, {Component, PropTypes} from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import T from 'i18n-react';
 import debounce from 'lodash/debounce';
-import ReactPaginate from 'react-paginate';
 
 require('./EntityListHeader.scss');
 
@@ -31,9 +30,6 @@ export default class EntityListHeader extends Component {
       searchText: props.searchText,
       sortOptions: props.sortOptions,
       filterOptions: props.filterOptions,
-      numberOfPages: props.numberOfPages,
-      numberOfEntities: props.numberOfEntities,
-      currentPage: props.currentPage,
       activeFilter: props.activeFilter,
       activeSort: props.activeSort
     };
@@ -46,9 +42,6 @@ export default class EntityListHeader extends Component {
       searchText: nextProps.searchText,
       sortOptions: nextProps.sortOptions,
       filterOptions: nextProps.filterOptions,
-      numberOfPages: nextProps.numberOfPages,
-      numberOfEntities: nextProps.numberOfEntities,
-      currentPage: nextProps.currentPage,
       activeFilter: nextProps.activeFilter,
       activeSort: nextProps.activeSort
     });
@@ -63,11 +56,6 @@ export default class EntityListHeader extends Component {
       return;
     }
     this.setState({isSortExpanded: !this.state.isSortExpanded});
-  }
-
-  handlePageChange(data) {
-    let clickedIndex = data.selected+1;
-    this.props.onPageChange(clickedIndex);
   }
 
   onSearchChange(e) {
@@ -93,37 +81,6 @@ export default class EntityListHeader extends Component {
     this.setState({
       isFilterExpanded: false
     });
-  }
-  showPagination() {
-    return (
-      <div className="pagination">
-        {
-          this.state.numberOfPages <= 1 ?
-            <span className="total-entities">
-              {this.state.numberOfEntities} Entities
-            </span>
-          :
-            <span>
-              <span className="total-entities">
-                {this.state.numberOfEntities}+ Entities
-              </span>
-              <ReactPaginate
-                pageCount={this.state.numberOfPages}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={1}
-                breakLabel={<span>...</span>}
-                breakClassName={"ellipsis"}
-                previousLabel={<span className="fa fa-angle-left"></span>}
-                nextLabel={<span className="fa fa-angle-right"></span>}
-                onPageChange={this.handlePageChange.bind(this)}
-                initialPage={this.state.currentPage-1}
-                containerClassName={"page-list"}
-                activeClassName={"current-page"}
-              />
-            </span>
-        }
-      </div>
-    );
   }
   render() {
     let tooltipId = 'filter-tooltip-target-id';
@@ -236,12 +193,6 @@ export default class EntityListHeader extends Component {
             </span>
             {sortDropdown}
           </div>
-          {
-            this.state.numberOfEntities ?
-              this.showPagination()
-            :
-              null
-          }
         </div>
       </div>
     );
@@ -276,8 +227,4 @@ EntityListHeader.propTypes = {
   onSearch: PropTypes.func,
   isSearchDisabled: PropTypes.bool,
   searchText: PropTypes.string,
-  numberOfPages: PropTypes.number,
-  numberOfEntities: PropTypes.number,
-  currentPage: PropTypes.number,
-  onPageChange: PropTypes.func
 };

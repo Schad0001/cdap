@@ -17,12 +17,48 @@
 import React, {PropTypes, Component} from 'react';
 import T from 'i18n-react';
 import upperFirst from 'lodash/upperFirst';
+import ReactPaginate from 'react-paginate';
 
 require('./EntityListInfo.scss');
 
 export default class EntityListInfo extends Component {
   constructor(props) {
     super(props);
+  }
+  handlePageChange(data) {
+    let clickedIndex = data.selected+1;
+    this.props.onPageChange(clickedIndex);
+  }
+  showPagination() {
+    return (
+      <span className="pagination">
+        {
+          this.props.numberOfPages <= 1 ?
+            <span className="total-entities">
+              {this.props.numberOfEntities} Entities
+            </span>
+          :
+            <span>
+              <span className="total-entities">
+                {this.props.numberOfEntities}+ Entities
+              </span>
+              <ReactPaginate
+                pageCount={this.props.numberOfPages}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                breakLabel={<span>...</span>}
+                breakClassName={"ellipsis"}
+                previousLabel={<span className="fa fa-angle-left"></span>}
+                nextLabel={<span className="fa fa-angle-right"></span>}
+                onPageChange={this.handlePageChange.bind(this)}
+                initialPage={this.props.currentPage-1}
+                containerClassName={"page-list"}
+                activeClassName={"current-page"}
+              />
+            </span>
+        }
+      </span>
+    );
   }
   render() {
     let activeFilters = this.props.activeFilter.map(filter => upperFirst(filter) + 's');
@@ -58,7 +94,15 @@ export default class EntityListInfo extends Component {
 
     return (
       <div className={this.props.className}>
-        <h3>{text.title} "{this.props.namespace}"</h3>
+        <span className="title">
+          <h3>{text.title} "{this.props.namespace}"</h3>
+        </span>
+        {
+          this.props.numberOfEntities ?
+            this.showPagination()
+          :
+            null
+        }
         <div className="subtitle">
           <span>
             {subtitle}
@@ -74,7 +118,11 @@ EntityListInfo.propTypes = {
   namespace: PropTypes.string,
   activeFilter: PropTypes.array,
   activeSort: PropTypes.obj,
-  searchText: PropTypes.string
+  searchText: PropTypes.string,
+  numberOfPages: PropTypes.number,
+  numberOfEntities: PropTypes.number,
+  currentPage: PropTypes.number,
+  onPageChange: PropTypes.func
 };
 
 EntityListInfo.defaultProps = {
@@ -82,5 +130,9 @@ EntityListInfo.defaultProps = {
   namespace: '',
   activeFilter: [],
   activeSort: {},
-  searchText: ''
+  searchText: '',
+  numberOfPages: 1,
+  numberOfEntities: 0,
+  currentPage: 1,
+  onPageChange: () => {}
 };

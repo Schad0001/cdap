@@ -560,9 +560,6 @@ class EntityListView extends Component {
           onSearch={this.handleSearch.bind(this)}
           isSearchDisabled={this.state.isSearchDisabled}
           searchText={this.state.query}
-          numberOfEntities={this.state.total}
-          numberOfPages={this.state.numPages}
-          currentPage={this.state.currentPage}
           onPageChange={this.handlePageChange}
         />
         <Pagination
@@ -573,8 +570,12 @@ class EntityListView extends Component {
           setDirection={this.setAnimationDirection}
         >
           <EntityListInfo
-            className="title-subtitle"
+            className="entity-list-info"
             namespace={this.props.params.namespace}
+            numberOfEntities={this.state.total}
+            numberOfPages={this.state.numPages}
+            currentPage={this.state.currentPage}
+            onPageChange={this.handlePageChange}
             activeFilter={this.state.filter}
             activeSort={this.state.sortObj}
             searchText={this.state.query}

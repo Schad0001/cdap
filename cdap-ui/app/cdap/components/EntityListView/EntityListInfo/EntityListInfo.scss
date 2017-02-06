@@ -14,17 +14,86 @@
  * the License.
  */
 
-.title-subtitle {
+$page-li-size: 22px;
+$current-page-background-color: rgba(93, 103, 137, 1);
+$hovered-page-background-color: rgba(219, 219, 219, 1);
+
+.entity-list-info {
   padding: 15px 25px 5px 10px;
+
+  .title {
+    display: inline-block;
+  }
 
   .subtitle {
     color: #999999;
     border-bottom: 1px solid #dddddd;
     height: 11px;
+    clear: both;
 
     span {
       background-color: #ffffff;
       padding-right: 15px;
+    }
+  }
+
+  .pagination {
+    float: right;
+    margin-right: 50px;
+    margin-bottom: initial;
+
+    .total-entities {
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .page-list {
+      padding-left: 16px;
+      list-style-type: none;
+      display: inline;
+
+      li {
+        font-weight: bold;
+        display: inline-block;
+        height: $page-li-size;
+        width: $page-li-size;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 100%;
+
+        a {
+          color: inherit;
+          vertical-align: middle;
+          &:hover,
+          &:focus {
+            text-decoration: none;
+          }
+        }
+
+        &:not(:first-child) {
+          margin-left: 15px;
+        }
+
+        &.current-page {
+          background-color: $current-page-background-color;
+
+          a {
+            color: #ffffff;
+          }
+        }
+
+        &.ellipsis {
+          margin-left: 5px;
+          margin-right: -19px;
+        }
+
+        &:hover {
+          &:not(.current-page):not(.ellipsis) {
+            cursor: pointer;
+            background-color: $hovered-page-background-color;
+          }
+        }
+      }
     }
   }
 }
