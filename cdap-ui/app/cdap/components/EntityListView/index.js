@@ -36,7 +36,7 @@ import EntityListInfo from './EntityListInfo';
 require('./EntityListView.scss');
 import ee from 'event-emitter';
 
-const defaultFilter = ['app', 'artifact', 'dataset', 'stream'];
+const defaultFilter = [];
 
 // 312 = cardWith (300) + (5 x 2 side margins) + ( 1 x 2 border widths)
 const cardWidthWithMarginAndBorder = 312;
