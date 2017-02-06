@@ -132,17 +132,12 @@ public class FileMetadataTest {
     Assert.assertEquals(12, fileMetadataReader.listFiles(logPathIdentifier, 0, 100).size());
     Assert.assertEquals(5, fileMetadataReader.listFiles(logPathIdentifier, 20, 50).size());
     Assert.assertEquals(2, fileMetadataReader.listFiles(logPathIdentifier, 100, 150).size());
-    // should include three files with event start time 80.
+
+    // should include the latest file with event start time 80.
     List<LogLocation> locationList = fileMetadataReader.listFiles(logPathIdentifier, 81, 85);
-    Assert.assertEquals(3, locationList.size());
-    int count = 0;
-    int eventTime = 80;
-    for (LogLocation logLocation : locationList) {
-      Assert.assertEquals(80, logLocation.getEventTimeMs());
-      Assert.assertEquals(currentTime + count, logLocation.getFileCreationTimeMs());
-      Assert.assertEquals(location.append(Long.toString(eventTime + count)), logLocation.getLocation());
-      count++;
-    }
+    Assert.assertEquals(1, locationList.size());
+    Assert.assertEquals(80, locationList.get(0).getEventTimeMs());
+    Assert.assertEquals(location.append("82"), locationList.get(0).getLocation());
 
     Assert.assertEquals(1, fileMetadataReader.listFiles(logPathIdentifier, 150, 1000).size());
   }
