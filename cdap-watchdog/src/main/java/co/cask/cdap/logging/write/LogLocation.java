@@ -108,7 +108,7 @@ public class LogLocation {
 
   /**
    * Return closeable iterator of {@link LogEvent}
-   * @param logFilter filter
+   * @param logFilter filter for filtering log events
    * @param fromTimeMs start timestamp in millis
    * @param toTimeMs end timestamp in millis
    * @param maxEvents max events to return
@@ -119,7 +119,7 @@ public class LogLocation {
   }
 
   /**
-   * @param logFilter filter
+   * @param logFilter filter for filtering log events
    * @param fromTimeMs start timestamp in millis
    * @param toTimeMs end timestamp in millis
    * @param maxEvents max events to return
@@ -137,7 +137,7 @@ public class LogLocation {
 
   /**
    * Return closeable iterator of {@link LogEvent}
-   * @param logFilter filter
+   * @param logFilter filter for filtering log events
    * @param fromTimeMs start timestamp in millis
    * @param maxEvents max events to return
    * @return closeable iterator of previous log events

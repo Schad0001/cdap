@@ -57,7 +57,6 @@ import java.util.Map;
  */
 public class FileMetadataReader {
   private static final byte[] ROW_KEY_PREFIX = Bytes.toBytes(200);
-
   private static final Comparator<LogLocation> LOG_LOCATION_COMPARATOR = new Comparator<LogLocation>() {
     @Override
     public int compare(LogLocation o1, LogLocation o2) {
@@ -69,7 +68,6 @@ public class FileMetadataReader {
       return Longs.compare(o1.getFileCreationTimeMs(), o2.getFileCreationTimeMs());
     }
   };
-
 
   private final DatasetFramework datasetFramework;
   private final Transactional transactional;
@@ -135,7 +133,7 @@ public class FileMetadataReader {
   public List<LogLocation> listFiles(final LogPathIdentifier logPathIdentifier,
                                      final long startTimestampMs, final long endTimestampMs) throws Exception {
 
-    return txExecute(transactional, new TxCallable<List<LogLocation>>() {
+    List<LogLocation> endTimestampFilteredList = txExecute(transactional, new TxCallable<List<LogLocation>>() {
       @Override
       public List<LogLocation> call(DatasetContext context) throws Exception {
         Table table = getLogMetaTable(context);
@@ -149,7 +147,8 @@ public class FileMetadataReader {
         final List<LogLocation> files = new ArrayList<>();
 
         for (Map.Entry<byte[], byte[]> entry : cols.getColumns().entrySet()) {
-          // the location can be any location from on the filesystem for custom mapped namespaces
+          // old rowkey format length is 8 bytes (just the event timestamp is the column key)
+          // new row-key format length is 17 bytes (version_byte, event timestamp (8b) and current timestamp (8b)
           if (entry.getKey().length == 8) {
             long eventTimestamp = Bytes.toLong(entry.getKey());
             if (!(eventTimestamp > endTimestampMs)) {
@@ -174,15 +173,20 @@ public class FileMetadataReader {
             }
           }
         }
-
-        return getFilesInRange(files, startTimestampMs);
+        return files;
       }
     });
-  }
 
+    // performing extra filtering (based on start timestamp) outside the transaction
+    return getFilesInRange(endTimestampFilteredList, startTimestampMs);
+  }
 
   @VisibleForTesting
   List<LogLocation> getFilesInRange(List<LogLocation> files, long startTimeInMs) {
+    // return if its empty
+    if (files.isEmpty()) {
+      return files;
+    }
 
     Collections.sort(files, LOG_LOCATION_COMPARATOR);
     // iterate the list from the end
@@ -209,7 +213,6 @@ public class FileMetadataReader {
   }
 
   // todo : CDAP-8231 copy clean meta data logic here or separate class when implementing log cleanup task
-
   /**
    * Executes the given callable with a transaction. Any exception will result in {@link RuntimeException}.
    */
@@ -220,6 +223,4 @@ public class FileMetadataReader {
       throw Transactions.propagate(e);
     }
   }
-
-
 }
