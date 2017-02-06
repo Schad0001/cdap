@@ -319,7 +319,7 @@ class EntityListView extends Component {
     // TODO/FIXME: hack to not display programs when filter is empty (which means all
     // entities should be displayed). Maybe this should be a backend change?
     if (filter.length === 0) {
-      filter = filter.concat('app', 'artifact', 'dataset', 'stream');
+      filter = ['app', 'artifact', 'dataset', 'stream'];
     }
 
     this.setState({
